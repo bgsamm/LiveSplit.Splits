@@ -21,6 +21,7 @@ namespace LiveSplit.UI.Components
         }
         public string Comparison { get { return Data.Comparison; } set { Data.Comparison = value; } }
         public string TimingMethod { get { return Data.TimingMethod; } set { Data.TimingMethod = value; } }
+        public Boolean Static { get { return Data.Static; } set { Data.Static = value; } }
 
         public ColumnData Data { get; set; }
         protected LiveSplitState CurrentState { get; set; }
@@ -37,10 +38,15 @@ namespace LiveSplit.UI.Components
         {
             InitializeComponent();
 
-            Data = new ColumnData(columnName, ColumnType.Delta, "Current Comparison", "Current Timing Method");
+            Data = new ColumnData(columnName, ColumnType.Delta, false, "Current Comparison", "Current Timing Method");
 
             CurrentState = state;
             ColumnsList = columnsList; 
+        }
+
+        void chkStatic_CheckStateChanged(object sender, EventArgs e)
+        {
+            Static = chkStatic.Checked;
         }
 
         void cmbTimingMethod_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,6 +62,16 @@ namespace LiveSplit.UI.Components
         void cmbColumnType_SelectedIndexChanged(object sender, EventArgs e)
         {
             Type = cmbColumnType.SelectedItem.ToString();
+            if (Type == "Split Time" || Type == "Segment Time")
+            {
+                chkStatic.Enabled = true;
+                Static = chkStatic.Checked;
+            }
+            else
+            {
+                chkStatic.Enabled = false;
+                Static = false;
+            }
         }
 
         void ColumnSettings_Load(object sender, EventArgs e)
@@ -63,9 +79,11 @@ namespace LiveSplit.UI.Components
             UpdateComparisonItems();
 
             txtName.DataBindings.Clear();
+            chkStatic.DataBindings.Clear();
             cmbColumnType.DataBindings.Clear();
             cmbTimingMethod.DataBindings.Clear();
             txtName.DataBindings.Add("Text", this, "ColumnName", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkStatic.DataBindings.Add("Checked", this, "Static", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbColumnType.DataBindings.Add("SelectedItem", this, "Type", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbTimingMethod.DataBindings.Add("SelectedItem", this, "TimingMethod", false, DataSourceUpdateMode.OnPropertyChanged);
         }

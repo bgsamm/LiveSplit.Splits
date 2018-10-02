@@ -373,18 +373,21 @@ namespace LiveSplit.UI.Components
                 {
                     label.ForeColor = Settings.OverrideTimesColor ? Settings.BeforeTimesColor : state.LayoutSettings.TextColor;
 
-                    if (type == ColumnType.SplitTime)
+                    if (!data.Static)
                     {
-                        label.Text = TimeFormatter.Format(Split.SplitTime[timingMethod]);
-                    }
-                    else //SegmentTime
-                    {
-                        var segmentTime = LiveSplitStateHelper.GetPreviousSegmentTime(state, splitIndex, timingMethod);
-                        label.Text = TimeFormatter.Format(segmentTime);
+                        if (type == ColumnType.SplitTime)
+                        {
+                            label.Text = TimeFormatter.Format(Split.SplitTime[timingMethod]);
+                        }
+                        else //SegmentTime
+                        {
+                            var segmentTime = LiveSplitStateHelper.GetPreviousSegmentTime(state, splitIndex, timingMethod);
+                            label.Text = TimeFormatter.Format(segmentTime);
+                        }
                     }
                 }
 
-                if (type == ColumnType.DeltaorSplitTime || type == ColumnType.Delta)
+                else if (type == ColumnType.DeltaorSplitTime || type == ColumnType.Delta)
                 {
                     var deltaTime = Split.SplitTime[timingMethod] - Split.Comparisons[comparison][timingMethod];
                     var color = LiveSplitStateHelper.GetSplitColor(state, deltaTime, splitIndex, true, true, comparison, timingMethod);

@@ -565,10 +565,10 @@ namespace LiveSplit.UI.Components
         private void UpdateLayoutForColumn()
         {
             tableColumns.RowCount++;
-            tableColumns.RowStyles.Add(new RowStyle(SizeType.Absolute, 179f));
-            tableColumns.Size = new Size(tableColumns.Size.Width, tableColumns.Size.Height + 179);
-            Size = new Size(Size.Width, Size.Height + 179);
-            groupColumns.Size = new Size(groupColumns.Size.Width, groupColumns.Size.Height + 179);
+            tableColumns.RowStyles.Add(new RowStyle(SizeType.Absolute, 204f));
+            tableColumns.Size = new Size(tableColumns.Size.Width, tableColumns.Size.Height + 204);
+            Size = new Size(Size.Width, Size.Height + 204);
+            groupColumns.Size = new Size(groupColumns.Size.Width, groupColumns.Size.Height + 204);
         }
 
         private void btnAddColumn_Click(object sender, EventArgs e)
